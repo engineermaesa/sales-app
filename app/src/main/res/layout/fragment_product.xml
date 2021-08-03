@@ -31,42 +31,42 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
-        android:id="@+id/linear_layout_to_search_view"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:padding="5dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:gravity="center"
-        android:layout_below="@id/app_bar"
-        android:background="@drawable/background_container_search">
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/linear_layout_to_search_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="45dp"-->
+<!--        android:padding="5dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        android:layout_marginLeft="15dp"-->
+<!--        android:layout_marginRight="15dp"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_below="@id/app_bar"-->
+<!--        android:background="@drawable/background_container_search">-->
 
-        <EditText
-            android:id="@+id/edit_text_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Search"
-            android:inputType="text"
-            android:imeOptions="actionSearch"
-            android:textSize="14sp"
-            android:fontFamily="@font/poppins"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/image_view_search"
-            android:background="@android:color/transparent"/>
+<!--        <EditText-->
+<!--            android:id="@+id/edit_text_search"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Search"-->
+<!--            android:inputType="text"-->
+<!--            android:imeOptions="actionSearch"-->
+<!--            android:textSize="14sp"-->
+<!--            android:fontFamily="@font/poppins"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:layout_marginRight="5dp"-->
+<!--            android:layout_toLeftOf="@id/image_view_search"-->
+<!--            android:background="@android:color/transparent"/>-->
 
-        <ImageView
-            android:id="@+id/image_view_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_search"
-            android:layout_marginRight="15dp"
-            android:layout_alignParentRight="true"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/image_view_search"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/ic_search"-->
+<!--            android:layout_marginRight="15dp"-->
+<!--            android:layout_alignParentRight="true"/>-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -74,14 +74,16 @@
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@id/linear_layout_to_search_view"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/app_bar"/>
 
     <include
         android:id="@+id/progress_bar_login"
         android:visibility="gone"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_below="@id/app_bar"
         layout="@layout/layout_progress_bar_login" />
 
 </RelativeLayout>

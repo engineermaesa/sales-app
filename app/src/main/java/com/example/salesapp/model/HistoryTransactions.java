@@ -47,10 +47,16 @@ public class HistoryTransactions {
     private String updatedAt;
     @SerializedName("bukti")
     @Expose
-    private Object bukti;
+    private String bukti;
     @SerializedName("transaction_details")
     @Expose
-    private List<DetailTransactions> detailTransactions = null;
+    private List<DetailTransactions> detailTransactions;
+    @SerializedName("invoice")
+    @Expose
+    private String invoice;
+    @SerializedName("payment")
+    @Expose
+    private String payment;
 
     public Integer getId() {
         return id;
@@ -156,11 +162,11 @@ public class HistoryTransactions {
         this.updatedAt = updatedAt;
     }
 
-    public Object getBukti() {
+    public String getBukti() {
         return bukti;
     }
 
-    public void setBukti(Object bukti) {
+    public void setBukti(String bukti) {
         this.bukti = bukti;
     }
 
@@ -170,5 +176,21 @@ public class HistoryTransactions {
 
     public void setDetailTransactions(List<DetailTransactions> detailTransactions) {
         this.detailTransactions = detailTransactions;
+    }
+
+    public String getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(String invoice) {
+        this.invoice = invoice;
+    }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 }

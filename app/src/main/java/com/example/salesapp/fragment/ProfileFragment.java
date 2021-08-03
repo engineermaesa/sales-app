@@ -1,66 +1,103 @@
 package com.example.salesapp.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.salesapp.R;
+import com.example.salesapp.activity.GuideActivity;
+import com.example.salesapp.activity.LoginActivity;
+import com.example.salesapp.activity.PrivacyActivity;
+import com.example.salesapp.api.ApiService;
+import com.example.salesapp.api.RetrofitBuilder;
+import com.example.salesapp.api.TokenManager;
+import com.example.salesapp.model.GetResponseProduct;
+import com.example.salesapp.model.GetResponseProfile;
+import com.example.salesapp.model.Profile;
+import com.squareup.picasso.Picasso;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
+
 public class ProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "HomeFragment";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private CircleImageView circleImageViewAvatar;
+    private TextView tvName, tvCompany, tvDivision;
+    private RelativeLayout relativeLayoutGuide, relativeLayoutPrivacy, relativeLayoutLogout;
 
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private ApiService service;
+    private TokenManager tokenManager;
+    private Call<GetResponseProfile> callProfile;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        circleImageViewAvatar = view.findViewById(R.id.image_view_photo);
+        tvName = view.findViewById(R.id.text_view_name);
+        tvCompany = view.findViewById(R.id.text_view_company);
+        tvDivision = view.findViewById(R.id.text_view_division);
+        relativeLayoutGuide = view.findViewById(R.id.relative_layout_guide);
+        relativeLayoutPrivacy = view.findViewById(R.id.relative_layout_privacy);
+        relativeLayoutLogout = view.findViewById(R.id.relative_layout_logout);
+
+        tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE));
+        if (tokenManager.getToken() == null) {
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            getActivity().finish();
         }
+        service = RetrofitBuilder.createServiceWithAuth(ApiService.class, tokenManager);
+
+        relativeLayoutGuide.setOnClickListener(v -> startActivity(new Intent(getContext(), GuideActivity.class)));
+        relativeLayoutPrivacy.setOnClickListener(v -> startActivity(new Intent(getContext(), PrivacyActivity.class)));
+        relativeLayoutLogout.setOnClickListener(v -> {
+            TokenManager tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
+            tokenManager.deleteToken();
+            startActivity(new Intent(getContext(), LoginActivity.class));
+            getActivity().finish();
+        });
+
+        getDataProfile();
+
+        return view;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+    private void getDataProfile() {
+        callProfile = service.getProfile();
+        callProfile.enqueue(new Callback<GetResponseProfile>() {
+            @Override
+            public void onResponse(Call<GetResponseProfile> call, Response<GetResponseProfile> response) {
+                Log.w(TAG, "onResponse: " + response);
+                if (response.isSuccessful()) {
+                    Profile profile = response.body().getProfile();
+                    Picasso.get()
+                            .load(RetrofitBuilder.BASE_URL_IMAGES + profile.getAvatar())
+                            .into(circleImageViewAvatar);
+                    tvName.setText(profile.getName());
+                    tvCompany.setText(profile.getCompanyName());
+                    tvDivision.setText(profile.getDevisionName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetResponseProfile> call, Throwable t) {
+                Log.w(TAG, "onFailure: " + t.getMessage());
+            }
+        });
     }
 }

@@ -28,8 +28,11 @@ import com.example.salesapp.api.ApiService;
 import com.example.salesapp.api.RetrofitBuilder;
 import com.example.salesapp.api.TokenManager;
 import com.example.salesapp.fragment.HomeFragment;
+import com.example.salesapp.model.GetResponseProfile;
 import com.example.salesapp.model.Product;
+import com.example.salesapp.model.Profile;
 import com.example.salesapp.model.Transaction;
+import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -67,6 +70,7 @@ public class CartActivity extends AppCompatActivity {
     private ApiService service;
     private TokenManager tokenManager;
     private Call<Transaction> callBooking;
+    private Call<GetResponseProfile> callProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,12 +113,14 @@ public class CartActivity extends AppCompatActivity {
         }
         service = RetrofitBuilder.createServiceWithAuth(ApiService.class, tokenManager);
         displayLocation();
+        displayImage();
 
         HomeFragment.cart_count = 0;
 
         for (int i = 0; i < AllProductAdapter.dataList.size(); i++) {
             for (int j = i + 1; j < AllProductAdapter.dataList.size(); j++) {
                 if (AllProductAdapter.dataList.get(i).getImg().equals(AllProductAdapter.dataList.get(j).getImg())) {
+                    AllProductAdapter.dataList.get(i).setId(AllProductAdapter.dataList.get(j).getId());
                     AllProductAdapter.dataList.get(i).setStok(AllProductAdapter.dataList.get(j).getStok());
                     AllProductAdapter.dataList.get(i).setTotalCash(AllProductAdapter.dataList.get(j).getTotalCash());
                     AllProductAdapter.dataList.remove(j);
@@ -125,11 +131,42 @@ public class CartActivity extends AppCompatActivity {
 
         temparraylist.addAll(AllProductAdapter.dataList);
         AllProductAdapter.dataList.clear();
+
         cartRecyclerView = findViewById(R.id.recycler_view_cart);
         cartAdapter = new CartAdapter(temparraylist, this);
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         cartRecyclerView.setLayoutManager(mLayoutManager);
         cartRecyclerView.setAdapter(cartAdapter);
+
+        for (int i = 0; i < temparraylist.size(); i++) {
+            grandTotalplus = grandTotalplus + temparraylist.get(i).getTotalCash();
+        }
+
+        DecimalFormat decim = new DecimalFormat("#,###.##");
+        String price = decim.format(grandTotalplus);
+        grandTotal.setText(price.replace(',', '.'));
+    }
+
+    private void displayImage() {
+        callProfile = service.getProfile();
+        callProfile.enqueue(new Callback<GetResponseProfile>() {
+            @Override
+            public void onResponse(Call<GetResponseProfile> call, Response<GetResponseProfile> response) {
+                Log.w(TAG, "onResponse: " + response);
+                if (response.isSuccessful()) {
+                    Profile profile = response.body().getProfile();
+                    Picasso.get()
+                            .load(RetrofitBuilder.BASE_URL_IMAGES + profile.getAvatar())
+                            .into(ivPelanggan);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetResponseProfile> call, Throwable t) {
+                Log.w(TAG, "onFailure: " + t.getMessage());
+            }
+        });
     }
 
     @SuppressLint("MissingPermission")
@@ -139,6 +176,7 @@ public class CartActivity extends AppCompatActivity {
 
             String originalString = grandTotal.getText().toString();
             originalString = originalString.replaceAll("[.]", "");
+//            int totalPrice = originalString;
 
             detail.setAddress(etAlamat.getText().toString());
             detail.setNoted(etCatatan.getText().toString());

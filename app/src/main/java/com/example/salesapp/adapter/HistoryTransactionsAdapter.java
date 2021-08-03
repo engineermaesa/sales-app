@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.salesapp.R;
+import com.example.salesapp.activity.InvoiceActivity;
 import com.example.salesapp.model.HistoryTransactions;
 import com.example.salesapp.model.Product;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,11 +48,14 @@ public class HistoryTransactionsAdapter extends RecyclerView.Adapter<HistoryTran
     public void onBindViewHolder(ViewHolder holder, int position) {
         HistoryTransactions list = historyTransactions.get(position);
         holder.tvCustomerName.setText(list.getCustomerName());
-        holder.tvTotalPrice.setText(String.valueOf(list.getTotalPrice()));
         holder.tvStatus.setText(list.getStatus());
 
-        DateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        DecimalFormat decim = new DecimalFormat("#,###.##");
+        String price = decim.format(list.getTotalPrice());
+        holder.tvTotalPrice.setText(price.replace(',', '.'));
+
+        DateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.US);
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
 
         String inputText = list.getCreatedAt();
         Date date = null;
@@ -60,6 +66,12 @@ public class HistoryTransactionsAdapter extends RecyclerView.Adapter<HistoryTran
         }
         String outputText = outputFormat.format(date);
         holder.tvDate.setText(outputText);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), InvoiceActivity.class);
+            intent.putExtra("id",list.getId());
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override
@@ -69,12 +81,12 @@ public class HistoryTransactionsAdapter extends RecyclerView.Adapter<HistoryTran
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ivIconStatus;
+//        ImageView ivIconStatus;
         TextView tvCustomerName, tvTotalPrice, tvDate, tvStatus;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ivIconStatus = itemView.findViewById(R.id.image_view_transactions_status);
+//            ivIconStatus = itemView.findViewById(R.id.image_view_transactions_status);
             tvCustomerName = itemView.findViewById(R.id.text_view_transactions_customer_name);
             tvTotalPrice = itemView.findViewById(R.id.text_view_transactions_total_price);
             tvDate = itemView.findViewById(R.id.text_view_transactions_date);

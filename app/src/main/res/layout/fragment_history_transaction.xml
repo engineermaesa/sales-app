@@ -45,6 +45,36 @@
     <include
         android:id="@+id/progress_bar_login"
         android:visibility="gone"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_below="@id/app_bar"
         layout="@layout/layout_progress_bar_login" />
+
+    <RelativeLayout
+        android:id="@+id/relative_layout_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/image_view_empty"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/history_icon_empty"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Maaf, histori anda kosong"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/image_view_empty"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

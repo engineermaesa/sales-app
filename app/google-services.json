@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "318435748321",
+    "project_id": "salesapps-5df55",
+    "storage_bucket": "salesapps-5df55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318435748321:android:a3c4a2b38268d776cecaa0",
+        "android_client_info": {
+          "package_name": "com.example.salesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "318435748321-ag9o1omdtmnc61a3qb2csr1do11l98f1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.salesapp",
+            "certificate_hash": "3887b75a513db4af85e38730bd4d6beaf331678b"
+          }
+        },
+        {
+          "client_id": "318435748321-i0g259hltig0l21k4n671qu8mlbq7php.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADpPAP6o5E_DzNTeTu8s8VOqeClj3tmmM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "318435748321-i0g259hltig0l21k4n671qu8mlbq7php.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -46,7 +46,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final CartAdapter.ViewHolder holder, final int position) {
         DecimalFormat decim = new DecimalFormat("#,###.##");
-        String price = decim.format(cartModelArrayList.get(position).getPrice());
+        String price = decim.format(cartModelArrayList.get(position).getTotalCash());
         holder.productCartPrice.setText(price.replace(',', '.'));
 
         String priceSatuan = decim.format(cartModelArrayList.get(position).getPrice());

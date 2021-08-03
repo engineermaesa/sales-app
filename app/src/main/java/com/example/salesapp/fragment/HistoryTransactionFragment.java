@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.salesapp.R;
@@ -26,6 +27,7 @@ import com.example.salesapp.api.ApiService;
 import com.example.salesapp.api.RetrofitBuilder;
 import com.example.salesapp.api.TokenManager;
 import com.example.salesapp.model.GetResponseHistoryTransactions;
+import com.example.salesapp.model.GetResponseHistoryTransactionsList;
 import com.example.salesapp.model.GetResponseProduct;
 import com.example.salesapp.model.HistoryTransactions;
 import com.example.salesapp.model.Product;
@@ -45,6 +47,7 @@ public class HistoryTransactionFragment extends Fragment {
     private TextView mTitleToolbar;
     private View mProgressBar;
     private ProgressBar mCycleProgressBar;
+    private RelativeLayout relativeLayoutEmpty;
 
     private RecyclerView recyclerView;
     private HistoryTransactionsAdapter adapter;
@@ -52,7 +55,7 @@ public class HistoryTransactionFragment extends Fragment {
 
     private ApiService service;
     private TokenManager tokenManager;
-    private Call<GetResponseHistoryTransactions> call;
+    private Call<GetResponseHistoryTransactionsList> call;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +64,7 @@ public class HistoryTransactionFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         mProgressBar = view.findViewById(R.id.progress_bar_login);
         mToolbar = view.findViewById(R.id.toolbar);
+        relativeLayoutEmpty = view.findViewById(R.id.relative_layout_empty);
 
         mCycleProgressBar = mProgressBar.findViewById(R.id.progress_bar_cycle);
         mTitleToolbar = mToolbar.findViewById(R.id.toolbar_title);
@@ -85,22 +89,27 @@ public class HistoryTransactionFragment extends Fragment {
     private void getDataHistoryTransactions() {
         mProgressBar.setVisibility(View.VISIBLE);
         mCycleProgressBar.setVisibility(View.VISIBLE);
-        call = service.getHistoryTransactions();
-        call.enqueue(new Callback<GetResponseHistoryTransactions>() {
+        call = service.getHistoryTransactionsWithoutDetail();
+        call.enqueue(new Callback<GetResponseHistoryTransactionsList>() {
             @Override
-            public void onResponse(Call<GetResponseHistoryTransactions> call, Response<GetResponseHistoryTransactions> response) {
+            public void onResponse(Call<GetResponseHistoryTransactionsList> call, Response<GetResponseHistoryTransactionsList> response) {
                 Log.w(TAG, "onResponse: " + response);
                 if (response.isSuccessful()) {
-                    List<HistoryTransactions> list = response.body().getHistoryTransactions();
-                    adapter = new HistoryTransactionsAdapter(list, getContext());
-                    recyclerView.setAdapter(adapter);
+                    List<HistoryTransactions> list = response.body().getHistoryTransactionsList();
+                    if (list.size() > 0) {
+                        adapter = new HistoryTransactionsAdapter(list, getContext());
+                        recyclerView.setAdapter(adapter);
+                    }else {
+                        relativeLayoutEmpty.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    }
                 }
                 mProgressBar.setVisibility(View.GONE);
                 mCycleProgressBar.setVisibility(View.GONE);
             }
 
             @Override
-            public void onFailure(Call<GetResponseHistoryTransactions> call, Throwable t) {
+            public void onFailure(Call<GetResponseHistoryTransactionsList> call, Throwable t) {
                 Log.w(TAG, "onFailure: " + t.getMessage());
                 mProgressBar.setVisibility(View.GONE);
                 mCycleProgressBar.setVisibility(View.GONE);

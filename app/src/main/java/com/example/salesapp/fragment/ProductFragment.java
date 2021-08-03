@@ -43,7 +43,7 @@ public class ProductFragment extends Fragment implements AllProductAdapter.CallB
 
     private Toolbar mToolbar;
     private TextView mTitleToolbar;
-    private EditText etSearch;
+//    private EditText etSearch;
     private View mProgressBar;
     private ProgressBar mCycleProgressBar;
 
@@ -59,7 +59,7 @@ public class ProductFragment extends Fragment implements AllProductAdapter.CallB
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
 
-        etSearch = view.findViewById(R.id.edit_text_search);
+//        etSearch = view.findViewById(R.id.edit_text_search);
         recyclerView = view.findViewById(R.id.recycler_view);
         mProgressBar = view.findViewById(R.id.progress_bar_login);
         mCycleProgressBar = mProgressBar.findViewById(R.id.progress_bar_cycle);

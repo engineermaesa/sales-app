@@ -8,13 +8,9 @@ import java.util.List;
 public class GetResponseHistoryTransactions {
     @SerializedName("transaction")
     @Expose
-    private List<HistoryTransactions> historyTransactions = null;
+    private HistoryTransactions historyTransactions;
 
-    public List<HistoryTransactions> getHistoryTransactions() {
+    public HistoryTransactions getHistoryTransactions() {
         return historyTransactions;
-    }
-
-    public void setHistoryTransactions(List<HistoryTransactions> historyTransactions) {
-        this.historyTransactions = historyTransactions;
     }
 }

@@ -22,6 +22,7 @@ import com.example.salesapp.R;
 import com.example.salesapp.activity.NavigationActivity;
 import com.example.salesapp.api.RetrofitBuilder;
 import com.example.salesapp.fragment.HomeFragment;
+import com.example.salesapp.model.DetailTransactions;
 import com.example.salesapp.model.Product;
 import com.squareup.picasso.Picasso;
 
@@ -57,7 +58,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .load(RetrofitBuilder.BASE_URL_IMAGES + product.getImg())
                 .into(holder.ivProduct);
         holder.tvProductName.setText(product.getName());
-        DecimalFormat decim = new DecimalFormat("#,###.##");
+
+        DecimalFormat decim = new DecimalFormat ("#,###.##");
         String price = decim.format(product.getPrice());
         holder.tvProductPrice.setText(price.replace(',', '.'));
 

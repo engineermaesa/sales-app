@@ -19,7 +19,7 @@ public class Product {
     @SerializedName("price")
     @Expose
     private Integer price;
-    @SerializedName("stok")
+    @SerializedName("amount")
     @Expose
     private Integer stok;
     @SerializedName("featured")

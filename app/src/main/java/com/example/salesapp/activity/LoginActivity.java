@@ -16,6 +16,7 @@ import com.example.salesapp.api.ApiService;
 import com.example.salesapp.api.RetrofitBuilder;
 import com.example.salesapp.api.TokenManager;
 import com.example.salesapp.model.GetResponseToken;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
@@ -63,10 +64,13 @@ public class LoginActivity extends AppCompatActivity {
         String email = etEmail.getText().toString();
         String password = etPass.getText().toString();
 
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.w(TAG, "Token Firebase: " + token);
+
         mProgressBar.setVisibility(View.VISIBLE);
         mCycleProgressBar.setVisibility(View.VISIBLE);
 
-        call = service.login(email,password);
+        call = service.login(email,password,"fyaVE8fPiDQ:APA91bFuQfKdIN4dCqc17Y0fjTjKfMq1Au81nzzVekaIhToxu9a638lKrRbm0n4GDZeaZgi5HIvFl_RZhQTxqW-f8ERCnmyUnTwG6tChXXPjDwhZLG6BHfTrYq6qbovR3pDCswDpU92m");
         call.enqueue(new Callback<GetResponseToken>() {
             @Override
             public void onResponse(Call<GetResponseToken> call, Response<GetResponseToken> response) {
