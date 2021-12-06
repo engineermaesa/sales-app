@@ -38,15 +38,6 @@
                         android:layout_centerVertical="true"/>
 
                     <ImageView
-                        android:id="@+id/image_view_cart"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_keranjang"
-                        android:layout_toLeftOf="@id/image_view_notification"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"/>
-
-                    <ImageView
                         android:id="@+id/image_view_notification"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -61,7 +52,7 @@
             <RelativeLayout
                 android:id="@+id/relative_layout_two"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="150dp"
                 android:background="@drawable/toolbar_atas_two"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
@@ -74,12 +65,7 @@
                     android:layout_toLeftOf="@id/image_view_photo"
                     android:layout_marginRight="10dp"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="20dp">
-
-                    <ImageView
-                        android:id="@+id/image_view_company"
-                        android:layout_width="70dp"
-                        android:layout_height="50dp" />
+                    android:layout_marginLeft="25dp">
 
                     <TextView
                         android:id="@+id/text_view_name"
@@ -88,7 +74,8 @@
                         android:textStyle="bold"
                         android:textSize="14sp"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/poppins"/>
+                        android:fontFamily="@font/poppins"
+                        android:layout_marginTop="5dp"/>
 
                     <TextView
                         android:id="@+id/text_view_nik"
@@ -110,13 +97,14 @@
 
                 </LinearLayout>
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/image_view_photo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_marginRight="25dp"
+                    android:scaleType="centerCrop" />
 
             </RelativeLayout>
 
@@ -136,47 +124,257 @@
                     android:fontFamily="@font/poppins"
                     android:layout_marginTop="25dp"
                     android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"/>
+                    android:layout_marginRight="25dp" />
 
                 <WebView
                     android:id="@+id/web_view_tnc"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="145dp"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@id/app_bar"/>
+                    android:layout_marginTop="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:background="@drawable/button"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Omset : "
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="10dp"/>
+
+                        <TextView
+                            android:id="@+id/text_view_omset"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:background="@drawable/button"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Overachived : "
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="10dp"/>
+
+                        <TextView
+                            android:id="@+id/text_view_over_achieved"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Featured Product"
+                    android:text="Your Visit"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:textColor="@color/gray_dark"
                     android:fontFamily="@font/poppins"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"/>
+
+                <WebView
+                    android:id="@+id/web_view_visit"
+                    android:layout_width="match_parent"
+                    android:layout_height="145dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:background="@drawable/button"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pencapaian : "
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="10dp"/>
+
+                        <TextView
+                            android:id="@+id/text_view_achieved"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:background="@drawable/button"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Target : "
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="10dp"/>
+
+                        <TextView
+                            android:id="@+id/text_view_target"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your Merchants"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/gray_dark"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_corner"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/image_view_merchant"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:src="@drawable/ic_new_merchants" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toLeftOf="@id/text_view_total_merchants"
+                        android:layout_toRightOf="@id/image_view_merchant"
+                        android:fontFamily="@font/poppins"
+                        android:text="JUMLAH MITRA BARU"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_view_total_merchants"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your Book"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/gray_dark"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="30dp"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
+                    android:id="@+id/recycler_view_book"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"/>
+                    android:layout_marginRight="25dp"
+                    android:layout_marginBottom="10dp"/>
 
             </LinearLayout>
 
         </RelativeLayout>
 
     </ScrollView>
-
-    <include
-        android:id="@+id/progress_bar_login"
-        android:visibility="gone"
-        layout="@layout/layout_progress_bar_login" />
 
 </RelativeLayout>

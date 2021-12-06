@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +19,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.salesapp.R;
+import com.example.salesapp.activity.FormVisitActivity;
 import com.example.salesapp.activity.LoginActivity;
 import com.example.salesapp.adapter.AllProductAdapter;
 import com.example.salesapp.adapter.HistoryTransactionsAdapter;
@@ -29,8 +32,13 @@ import com.example.salesapp.api.TokenManager;
 import com.example.salesapp.model.GetResponseHistoryTransactions;
 import com.example.salesapp.model.GetResponseHistoryTransactionsList;
 import com.example.salesapp.model.GetResponseProduct;
+import com.example.salesapp.model.GetResponseVisit;
 import com.example.salesapp.model.HistoryTransactions;
+import com.example.salesapp.model.Page;
+import com.example.salesapp.model.Performance;
 import com.example.salesapp.model.Product;
+import com.example.salesapp.pagination.PaginationScrollListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,38 +49,26 @@ import retrofit2.Response;
 
 public class HistoryTransactionFragment extends Fragment {
 
-    private static final String TAG = "HistoryTransaction";
+    private static final String TAG = "VisitFragment";
+    private ProgressBar mProgressBarPagination;
+    private FloatingActionButton floatingActionButton;
 
-    private Toolbar mToolbar;
-    private TextView mTitleToolbar;
-    private View mProgressBar;
-    private ProgressBar mCycleProgressBar;
-    private RelativeLayout relativeLayoutEmpty;
-
-    private RecyclerView recyclerView;
     private HistoryTransactionsAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
 
     private ApiService service;
     private TokenManager tokenManager;
-    private Call<GetResponseHistoryTransactionsList> call;
+    private Call<Page> call;
+
+    private Context context;
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
+    private int page = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history_transaction, container, false);
-
-        recyclerView = view.findViewById(R.id.recycler_view);
-        mProgressBar = view.findViewById(R.id.progress_bar_login);
-        mToolbar = view.findViewById(R.id.toolbar);
-        relativeLayoutEmpty = view.findViewById(R.id.relative_layout_empty);
-
-        mCycleProgressBar = mProgressBar.findViewById(R.id.progress_bar_cycle);
-        mTitleToolbar = mToolbar.findViewById(R.id.toolbar_title);
-        mTitleToolbar.setText("History Transactions");
-
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
 
         tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE));
         if (tokenManager.getToken() == null) {
@@ -81,39 +77,77 @@ public class HistoryTransactionFragment extends Fragment {
         }
         service = RetrofitBuilder.createServiceWithAuth(ApiService.class, tokenManager);
 
-        getDataHistoryTransactions();
+        floatingActionButton = view.findViewById(R.id.fab1);
+
+        try {
+            context = getActivity();
+            recyclerView = view.findViewById(R.id.recycler_view);
+            mProgressBarPagination = view.findViewById(R.id.progress_bar_pagination);
+
+            layoutManager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(layoutManager);
+
+            adapter = new HistoryTransactionsAdapter(context);
+            recyclerView.setAdapter(adapter);
+            recyclerView.addOnScrollListener(new PaginationScrollListener(layoutManager) {
+                @Override
+                protected void loadMoreItems() {
+                    isLoading =  true;
+                    if (!isLastPage) {
+                        new Handler().postDelayed(() -> loadData(page), 200);
+                    }
+                }
+
+                @Override
+                public boolean isLastPage() {
+                    return isLastPage;
+                }
+
+                @Override
+                public boolean isLoading() {
+                    return isLoading;
+                }
+            });
+            loadData(page);
+        }catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
+        }
+
+        floatingActionButton.setOnClickListener(v -> {
+            startActivity(new Intent(getContext(), FormVisitActivity.class));
+        });
 
         return view;
     }
 
-    private void getDataHistoryTransactions() {
-        mProgressBar.setVisibility(View.VISIBLE);
-        mCycleProgressBar.setVisibility(View.VISIBLE);
-        call = service.getHistoryTransactionsWithoutDetail();
-        call.enqueue(new Callback<GetResponseHistoryTransactionsList>() {
+    private void loadData(int page) {
+        mProgressBarPagination.setVisibility(View.VISIBLE);
+        call = service.getVisit(1);
+        call.enqueue(new Callback<Page>() {
             @Override
-            public void onResponse(Call<GetResponseHistoryTransactionsList> call, Response<GetResponseHistoryTransactionsList> response) {
-                Log.w(TAG, "onResponse: " + response);
-                if (response.isSuccessful()) {
-                    List<HistoryTransactions> list = response.body().getHistoryTransactionsList();
-                    if (list.size() > 0) {
-                        adapter = new HistoryTransactionsAdapter(list, getContext());
-                        recyclerView.setAdapter(adapter);
-                    }else {
-                        relativeLayoutEmpty.setVisibility(View.VISIBLE);
-                        recyclerView.setVisibility(View.GONE);
-                    }
-                }
-                mProgressBar.setVisibility(View.GONE);
-                mCycleProgressBar.setVisibility(View.GONE);
+            public void onResponse(Call<Page> call, Response<Page> response) {
+                Page serverResponse = response.body();
+                resultAction(serverResponse);
             }
 
             @Override
-            public void onFailure(Call<GetResponseHistoryTransactionsList> call, Throwable t) {
-                Log.w(TAG, "onFailure: " + t.getMessage());
-                mProgressBar.setVisibility(View.GONE);
-                mCycleProgressBar.setVisibility(View.GONE);
+            public void onFailure(Call<Page> call, Throwable t) {
+                Log.e(TAG, t.toString());
+                mProgressBarPagination.setVisibility(View.GONE);
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void resultAction(Page model) {
+        mProgressBarPagination.setVisibility(View.INVISIBLE);
+        isLoading = false;
+        if (model != null) {
+            adapter.updateData(model.getData(), 0);
+            if (model.getCurrentPage() == model.getLastPage()) {
+                isLastPage = true;
+            }
+            page = model.getCurrentPage() + 1;
+        }
     }
 }

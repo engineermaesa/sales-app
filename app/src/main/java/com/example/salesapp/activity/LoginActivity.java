@@ -17,6 +17,7 @@ import com.example.salesapp.api.RetrofitBuilder;
 import com.example.salesapp.api.TokenManager;
 import com.example.salesapp.model.GetResponseToken;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText;
 
 import org.json.JSONObject;
 
@@ -30,7 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     private LoginActivity self;
 
     private TextView tvForgotPass;
-    private EditText etEmail, etPass;
+    private EditText etEmail;
+    private ShowHidePasswordEditText etPass;
     private Button btnLogin;
 
     private View mProgressBar;

@@ -43,6 +43,12 @@ public class Profile {
     @SerializedName("performance")
     @Expose
     private Performance performance;
+    @SerializedName("visit_performance")
+    @Expose
+    private Performance visit_performance;
+    @SerializedName("new_partner")
+    @Expose
+    private int newPartner;
     @SerializedName("devision_name")
     @Expose
     private String devisionName;
@@ -52,6 +58,7 @@ public class Profile {
     @SerializedName("company_logo")
     @Expose
     private String companyLogo;
+
 
     public Integer getId() {
         return id;
@@ -179,5 +186,21 @@ public class Profile {
 
     public void setCompanyLogo(String companyLogo) {
         this.companyLogo = companyLogo;
+    }
+
+    public Performance getVisit_performance() {
+        return visit_performance;
+    }
+
+    public void setVisit_performance(Performance visit_performance) {
+        this.visit_performance = visit_performance;
+    }
+
+    public int getNewPartner() {
+        return newPartner;
+    }
+
+    public void setNewPartner(int newPartner) {
+        this.newPartner = newPartner;
     }
 }

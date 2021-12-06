@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -21,7 +22,7 @@
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Title toolbar"
+                android:text="Histori Visit"
                 android:fontFamily="@font/poppins"
                 android:textColor="@color/white"
                 android:textStyle="bold"
@@ -31,24 +32,28 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@id/app_bar"/>
+        android:layout_below="@id/app_bar">
 
-    <include
-        android:id="@+id/progress_bar_login"
-        android:visibility="gone"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_below="@id/app_bar"
-        layout="@layout/layout_progress_bar_login" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar_pagination"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relative_layout_empty"
@@ -76,5 +81,19 @@
             android:layout_below="@id/image_view_empty"/>
 
     </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_plus_white"
+        android:layout_margin="15dp"
+        app:fabSize="normal"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:id="@+id/fab1"/>
 
 </RelativeLayout>

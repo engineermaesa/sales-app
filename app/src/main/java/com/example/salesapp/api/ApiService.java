@@ -1,12 +1,16 @@
 package com.example.salesapp.api;
 
 import com.example.salesapp.model.AccessToken;
+import com.example.salesapp.model.GetResponseBook;
 import com.example.salesapp.model.GetResponseHistoryTransactions;
 import com.example.salesapp.model.GetResponseHistoryTransactionsList;
 import com.example.salesapp.model.GetResponseNotification;
 import com.example.salesapp.model.GetResponseProduct;
 import com.example.salesapp.model.GetResponseProfile;
 import com.example.salesapp.model.GetResponseToken;
+import com.example.salesapp.model.GetResponseTransaction;
+import com.example.salesapp.model.GetResponseVisit;
+import com.example.salesapp.model.Page;
 import com.example.salesapp.model.Transaction;
 
 import okhttp3.MultipartBody;
@@ -20,6 +24,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
     @POST("login")
@@ -57,9 +62,6 @@ public interface ApiService {
             @Path("id") int id
     );
 
-    @GET("transactions")
-    Call<GetResponseHistoryTransactionsList> getHistoryTransactionsWithoutDetail();
-
     @GET("notifications")
     Call<GetResponseNotification> getNotification();
 
@@ -73,5 +75,45 @@ public interface ApiService {
             @Part MultipartBody.Part body,
             @Part("_method") RequestBody method
     );
+
+    @Multipart
+    @POST("visits")
+    Call<RequestBody> uploadVisit(
+            @Part("name") RequestBody name,
+            @Part("address") RequestBody address,
+            @Part("phone") RequestBody phone,
+            @Part("product") RequestBody product,
+            @Part("result") RequestBody result,
+            @Part("status") RequestBody status,
+            @Part MultipartBody.Part body
+    );
+
+    @FormUrlEncoded
+    @POST("prama_transaction")
+    Call<GetResponseTransaction> transaction(
+            @Field("customer_name") String name,
+            @Field("phone") String phone,
+            @Field("address") String address,
+            @Field("price") String price,
+            @Field("origin") String origin,
+            @Field("destination") String destination,
+            @Field("noted") String note,
+            @Field("status") String status
+    );
+
+    @GET("prama_transaction")
+    Call<GetResponseTransaction> getTransaction();
+
+    @GET("visits")
+    Call<Page> getVisit(
+            @Query("page") int page
+    );
+
+    @GET("visits")
+    Call<Page> getVisitPerformance();
+
+    @GET("books")
+    Call<GetResponseBook> getBook();
+
 }
 

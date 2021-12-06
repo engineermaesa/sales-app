@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="6dp"
+    card_view:cardElevation="3dp"
+    card_view:cardUseCompatPadding="true"
+    tools:context=".adapter.BookAdapter">
+
+    <LinearLayout
+        android:id="@+id/linear_layout_book_in_dashboard"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image_view_book"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/company" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/text_view_title_book"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The 360 Degree Leader: Developing Your Influence from Anywhere in the Organization"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/black"/>
+
+            <Button
+                android:id="@+id/button_book_read_now"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text="Read now"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="13sp"
+                android:background="@drawable/button_book"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="15dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -13,87 +13,88 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:layout_height="wrap_content">
 
-<!--        <androidx.cardview.widget.CardView-->
-<!--            android:id="@+id/card_view_one"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            card_view:cardCornerRadius="6dp"-->
-<!--            card_view:cardElevation="3dp"-->
-<!--            card_view:cardUseCompatPadding="true">-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/image_view_transactions_status"-->
-<!--                android:layout_width="60dp"-->
-<!--                android:layout_height="60dp"-->
-<!--                android:layout_alignParentLeft="true"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:scaleType="fitXY"-->
-<!--                android:src="@mipmap/ic_launcher_round" />-->
-
-<!--        </androidx.cardview.widget.CardView>-->
+        <ImageView
+            android:id="@+id/image_view_visit_photo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/black"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:id="@+id/linear_layout_one"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_centerVertical="true">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/image_view_visit_photo">
 
-            <TextView
-                android:id="@+id/text_view_transactions_customer_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="nama customers"
-                android:fontFamily="@font/poppins"
-                android:textSize="15sp"
-                android:textColor="@color/gray_dark"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text_view_transactions_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="tanggal visit"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="11sp"
+                    android:textColor="@color/gray_dark"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/text_view_transactions_customer_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="nama customers"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/text_view_transactions_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="total harga"
+                android:text="nomor telp"
                 android:fontFamily="@font/poppins"
-                android:textSize="15sp"
-                android:textColor="@color/gray_dark"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/linear_layout_one"
-            android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true">
-
-            <TextView
-                android:id="@+id/text_view_transactions_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="tanggal transaksi"
-                android:fontFamily="@font/poppins"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:textColor="@color/gray_dark"/>
 
             <TextView
                 android:id="@+id/text_view_transactions_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="status"
+                android:text="alamat"
                 android:fontFamily="@font/poppins"
-                android:textSize="15sp"
+                android:textSize="12sp"
+                android:textColor="@color/gray_dark"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_smooth"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:id="@+id/text_view_visit_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="result"
+                android:fontFamily="@font/poppins"
+                android:textSize="13sp"
                 android:textStyle="bold"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/gray_dark"/>
 
         </LinearLayout>
 

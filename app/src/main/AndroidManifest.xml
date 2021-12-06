@@ -4,6 +4,7 @@
     package="com.example.salesapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,8 +17,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         tools:node="merge">
-        <activity android:name=".activity.SplashActivity"></activity>
+        <activity
+            android:name=".activity.HistoriTransactionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.FormVisitActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DetailBookActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">

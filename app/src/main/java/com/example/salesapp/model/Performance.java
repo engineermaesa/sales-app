@@ -16,6 +16,9 @@ public class Performance {
     @SerializedName("target_hight")
     @Expose
     private Integer targetHigh;
+    @SerializedName("target")
+    @Expose
+    private Integer target;
 
     public Integer getAchieved() {
         return achieved;
@@ -47,5 +50,13 @@ public class Performance {
 
     public void setTargetHigh(Integer targetHigh) {
         this.targetHigh = targetHigh;
+    }
+
+    public void setTarget(Integer target) {
+        this.target = target;
+    }
+
+    public Integer getTarget() {
+        return target;
     }
 }

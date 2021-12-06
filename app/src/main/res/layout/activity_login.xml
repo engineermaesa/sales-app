@@ -21,42 +21,74 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/logo"/>
 
+        <TextView
+            android:id="@+id/label_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/circle_image_view"/>
+
         <EditText
             android:id="@+id/edit_text_email"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_marginTop="30dp"
-            android:paddingLeft="20dp"
-            android:shadowColor="#F5F5F7"
-            android:layout_below="@+id/circle_image_view"
-            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/label_email"
+            android:layout_marginTop="10dp"
             android:background="@drawable/edittext_login"
-            android:hint="Email"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:paddingLeft="20dp"
+            android:shadowColor="#F5F5F7" />
 
-        <EditText
-            android:id="@+id/edit_text_password"
+        <TextView
+            android:id="@+id/label_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_text_email"
+            android:layout_marginTop="20dp"
+            android:text="Password"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/relative_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:paddingLeft="20dp"
-            android:layout_below="@+id/edit_text_email"
-            android:layout_centerHorizontal="true"
             android:background="@drawable/edittext_login"
-            android:hint="Password"
-            android:inputType="textPassword"/>
+            android:shadowColor="#F5F5F7"
+            android:layout_below="@id/label_password">
+
+            <com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText
+                android:id="@+id/edit_text_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textPassword|textCapSentences"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:drawable_hide="@drawable/edittext_hide_eye_icon"
+                app:drawable_show="@drawable/edittext_show_eye_icon"
+                app:tint_color="#E6C02F"
+                android:background="@null"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/button_login"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/button"
+            android:layout_below="@+id/relative_layout"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/edit_text_password"
             android:layout_marginTop="30dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/poppins"
             android:text="Login"
             android:textAllCaps="false"
-            android:fontFamily="@font/poppins"
             android:textColor="#FFFFFF" />
 
         <TextView

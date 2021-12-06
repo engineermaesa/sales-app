@@ -176,12 +176,11 @@ public class CartActivity extends AppCompatActivity {
 
             String originalString = grandTotal.getText().toString();
             originalString = originalString.replaceAll("[.]", "");
-//            int totalPrice = originalString;
 
             detail.setAddress(etAlamat.getText().toString());
             detail.setNoted(etCatatan.getText().toString());
             detail.setCustomerName(etPelanggan.getText().toString());
-            detail.setTotalPrice(originalString);
+//            detail.setTotalPrice(originalString);
             detail.setProducts(temparraylist);
 
             mProgressBar.setVisibility(View.VISIBLE);

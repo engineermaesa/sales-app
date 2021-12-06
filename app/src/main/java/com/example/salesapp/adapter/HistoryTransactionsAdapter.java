@@ -15,8 +15,11 @@ import android.widget.TextView;
 
 import com.example.salesapp.R;
 import com.example.salesapp.activity.InvoiceActivity;
+import com.example.salesapp.api.RetrofitBuilder;
 import com.example.salesapp.model.HistoryTransactions;
 import com.example.salesapp.model.Product;
+import com.example.salesapp.model.Visit;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -30,11 +33,11 @@ import java.util.Locale;
 
 public class HistoryTransactionsAdapter extends RecyclerView.Adapter<HistoryTransactionsAdapter.ViewHolder> {
 
-    List<HistoryTransactions> historyTransactions;
+    ArrayList<Visit> historyTransactions;
     Context context;
 
-    public HistoryTransactionsAdapter(List<HistoryTransactions> historyTransactions, Context context) {
-        this.historyTransactions = historyTransactions;
+    public HistoryTransactionsAdapter(Context context) {
+        historyTransactions = new ArrayList<>();
         this.context = context;
     }
 
@@ -46,32 +49,30 @@ public class HistoryTransactionsAdapter extends RecyclerView.Adapter<HistoryTran
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        HistoryTransactions list = historyTransactions.get(position);
-        holder.tvCustomerName.setText(list.getCustomerName());
-        holder.tvStatus.setText(list.getStatus());
+        Visit list = historyTransactions.get(position);
 
-        DecimalFormat decim = new DecimalFormat("#,###.##");
-        String price = decim.format(list.getTotalPrice());
-        holder.tvTotalPrice.setText(price.replace(',', '.'));
+        Picasso.get()
+                .load(RetrofitBuilder.BASE_URL_IMAGES + list.getPhoto())
+                .into(holder.ivIconStatus);
 
-        DateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.US);
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+        holder.tvCustomerName.setText(list.getName());
+        holder.tvNoTelp.setText(list.getPhone());
+        holder.tvAddress.setText(list.getAddress());
+        holder.tvResult.setText(list.getResult());
 
-        String inputText = list.getCreatedAt();
-        Date date = null;
-        try {
-            date = inputFormat.parse(inputText);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String outputText = outputFormat.format(date);
-        holder.tvDate.setText(outputText);
+//        DateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.US);
+//        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+//
+//        String inputText = list.getVisitedAt();
+//        Date date = null;
+//        try {
+//            date = inputFormat.parse(inputText);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        String outputText = outputFormat.format(date);
 
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), InvoiceActivity.class);
-            intent.putExtra("id",list.getId());
-            v.getContext().startActivity(intent);
-        });
+        holder.tvDate.setText(list.getVisitedAt());
     }
 
     @Override
@@ -79,18 +80,31 @@ public class HistoryTransactionsAdapter extends RecyclerView.Adapter<HistoryTran
         return historyTransactions.size();
     }
 
+    public void updateData(List<Visit> filesList, int flag) {
+        if (flag == 0) { //append
+            for (int i = 0; i < filesList.size(); i++) {
+                historyTransactions.add(filesList.get(i));
+                notifyItemInserted(getItemCount());
+            }
+        } else { //clear all
+            filesList.clear();
+            notifyDataSetChanged();
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-//        ImageView ivIconStatus;
-        TextView tvCustomerName, tvTotalPrice, tvDate, tvStatus;
+        ImageView ivIconStatus;
+        TextView tvDate, tvCustomerName, tvNoTelp, tvAddress, tvResult;
 
         public ViewHolder(View itemView) {
             super(itemView);
-//            ivIconStatus = itemView.findViewById(R.id.image_view_transactions_status);
-            tvCustomerName = itemView.findViewById(R.id.text_view_transactions_customer_name);
-            tvTotalPrice = itemView.findViewById(R.id.text_view_transactions_total_price);
+            ivIconStatus = itemView.findViewById(R.id.image_view_visit_photo);
             tvDate = itemView.findViewById(R.id.text_view_transactions_date);
-            tvStatus = itemView.findViewById(R.id.text_view_transactions_status);
+            tvCustomerName = itemView.findViewById(R.id.text_view_transactions_customer_name);
+            tvNoTelp = itemView.findViewById(R.id.text_view_transactions_total_price);
+            tvAddress = itemView.findViewById(R.id.text_view_transactions_status);
+            tvResult = itemView.findViewById(R.id.text_view_visit_result);
         }
     }
 }
